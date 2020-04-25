@@ -1,12 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
 project("timer") 
 
-add_executable(timerTestExec src/main.cpp)
-target_sources("timerTestExec" PRIVATE src/timer.cpp src/main.cpp)
+include_directories(include/)
 find_package (Threads)
 
-SET( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++17 -pthread -Wall -Wpedantic" )
+add_executable(timerExec ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+target_sources("timerExec" PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/timer.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 add_compile_options(-Wall -Wextra -pedantic -Werror)
-INCLUDE_DIRECTORIES(include/)
+set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "--std=c++17 -pthread" )
 
-add_library(timer SHARED src/timer.cpp)
+add_library(timer SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/timer.cpp)
+
+add_executable(testCases ${CMAKE_CURRENT_SOURCE_DIR}/test/main.cpp)
+target_sources("testCases"
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/test/timerTestCase.cpp )
+target_link_libraries(testCases timer)
+

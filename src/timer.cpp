@@ -106,7 +106,6 @@ bool timer::stop()
             //Cleanup the thread
             this->t1->join();
             delete this->t1;
-
             //Resetting the pointer as available
             this->t1 = NULL;
         }
