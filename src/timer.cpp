@@ -20,17 +20,26 @@ timer::timer(std::string name, int delay, void (*cb)()):
 timer::~timer()
 {  
     this->stop();
-    delete this->t1;
 }
 
 std::string timer::to_string()
 {
     std::string ret;
-    ret = this->name + " : a is set with a timer of " + std::to_string(this->execDelay);
+    std::string state;
+    if(this->activated == true)
+    {
+        state = "This timer is currently active";
+    }
+    else
+    {
+        state = "This timer is currently idle";
+    }
+    
+    ret = this->name + " : a is set with a timer of " + std::to_string(this->execDelay) + "ms. " + state ;
     return ret;
 }
 
-bool timer::activate()
+bool timer::start()
 {
 
     bool ret = false;
@@ -50,6 +59,7 @@ bool timer::activate()
         }
         catch(const std::exception& e)
         {
+            std::cerr << e.what() << '\n';
             ret = false;
         }
     }
@@ -58,18 +68,26 @@ bool timer::activate()
 
 bool timer::stop()
 {
+    //return value
     bool ret = false;
     try
     {    
         if(t1 != NULL)
         {
+            //Change the object's state
             this->activated = false;
-            t1->join();
+            //Cleanup the thread
+            this->t1->join();
+            delete this->t1;
+
+            //Resetting the pointer as available
+            this->t1 = NULL;
         }
     }
     catch(const std::exception& e)
     {
-        //std::cerr << e.what() << '\n';
+        //Error handling with a stack trace
+        std::cerr << e.what() << '\n';
         ret = false;
     }
     return ret;
