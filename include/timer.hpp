@@ -19,8 +19,9 @@ class timer
          * \param delay The interval at which the callback function is going to be
          *              called.
          * \param cb    The function to call at the given interval.
+         * \param params Parameters to be given to the callback function
          */
-        timer(std::string name, unsigned int delay, void (*cb)());
+        timer(std::string name, unsigned int delay, void (*cb)(void *), void * params);
 
         //!Destructor
         ~timer();
@@ -72,7 +73,7 @@ class timer
         /** Changes the current callback function of the timer
          * \return True if the timer is activated
          */
-        bool setCallback(void (*cb)());
+        bool setCallback(void (*cb)(void *));
 
     private:
 
@@ -87,5 +88,6 @@ class timer
         volatile bool activated;    /**< Tells if the timer is running or stopped */
         
         unsigned int execDelay;     /**< The interval of time at which the callback is executed */
-        void (*callback)();         /**< A pointer to the callback function */
+        void (*callback)(void *);         /**< A pointer to the callback function */
+        void * params;
 };

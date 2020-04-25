@@ -1,3 +1,0 @@
-/home/vincent/Desktop/code/timerCallback/build/CMakeFiles/rebuild_cache.dir
-/home/vincent/Desktop/code/timerCallback/build/CMakeFiles/timer.dir
-/home/vincent/Desktop/code/timerCallback/build/CMakeFiles/edit_cache.dir

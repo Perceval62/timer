@@ -12,13 +12,15 @@
  * \param delay The interval at which the callback function is going to be
  *              called.
  * \param cb    The function to call at the given interval.
+ * \param params Parameters to be given to the callback function
  */
-timer::timer(std::string name, unsigned int delay, void (*cb)()):
+timer::timer(std::string name, unsigned int delay, void (*cb)(void * p), void * params ):
     name(name),
     t1(NULL),
     activated(false),
     execDelay(delay),
-    callback(cb)
+    callback(cb),
+    params(params)
 {
     if(delay == 0)
     {
@@ -126,12 +128,14 @@ bool timer::stop()
 */
 void timer::count()
 {
+    std::mutex m;
     while(this->activated != false)
     {
         std::chrono::milliseconds interval(execDelay);
         std::this_thread::sleep_for(interval);   
-        this->callback();     
+        this->callback(this->params);     
     }
+    m.unlock();
 }
 
 
@@ -187,7 +191,7 @@ bool timer::setDelay(unsigned int newDelay)
 /** Changes the current callback function of the timer
  * \return True if the timer is activated
  */
-bool timer::setCallback(void (*cb)())
+bool timer::setCallback(void (*cb)(void *))
 {
     bool ret = false;
     if(this->stop() == true)

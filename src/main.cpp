@@ -5,14 +5,14 @@
 #include <array>
 #include "timer.hpp"
 
-void bruh()
+void bruh(void *)
 {
     std::cout << "Callback" <<std::endl;
 }
 
 int main(int argc, char ** argv) 
 {
-    timer timer1("timer1", 1000, bruh);
+    timer timer1("timer1", 1000, bruh, NULL);
     timer1.start();
     for (int i = 0; i <= 10; i++)
     {
@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
     }
     std::cout << "End of the timer1 loop" <<std::endl;
 
-    timer timer2("timer2", 200, bruh);
+    timer timer2("timer2", 200, bruh, NULL);
     timer2.start();
     for(int i =0; i< 5; i++)
     {
