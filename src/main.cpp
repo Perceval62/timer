@@ -14,7 +14,6 @@ int main(int argc, char ** argv)
 {
     timer timer1("timer1", 1000, bruh);
     timer1.start();
-
     for (int i = 0; i <= 10; i++)
     {
         std::cout << "Doing stuff" <<std::endl;
@@ -27,6 +26,7 @@ int main(int argc, char ** argv)
         }
     }
     std::cout << "End of the timer1 loop" <<std::endl;
+
     timer timer2("timer2", 200, bruh);
     timer2.start();
     for(int i =0; i< 5; i++)
@@ -36,9 +36,8 @@ int main(int argc, char ** argv)
     }
     std::cout << timer2.to_string() <<std::endl;
     timer2.stop();
+
     std::cout << "Finished with timer2, restarting timer1"<<std::endl;
-
-
     if(!timer1.start()){std::cout << "Couldn't start the timer"<<std::endl;}
     for(int i =0; i< 5; i++)
     {
