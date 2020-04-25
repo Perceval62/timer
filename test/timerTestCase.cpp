@@ -5,8 +5,8 @@
 #include <assert.h>
 
 timerTestCase::timerTestCase(bool isValid, std::string name, unsigned int delay, void (*cb)(void *), void * params):
-        isValid(isValid),
         name(name),
+        isValid(isValid),
         delay(delay),
         cb(cb),
         params(params)
@@ -22,6 +22,8 @@ bool timerTestCase::testCombination()
 {
     try
     {
+        std::cout<<"Starting test case for timer"<<std::endl;
+
         timer myTimer("", 1, NULL, NULL);
         if(myTimer.start() == true)
         {

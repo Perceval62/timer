@@ -76,23 +76,23 @@ Constructors.
 \end{DoxyParams}
 
 
-Definition at line 17 of file timer.\+cpp.
+Definition at line 18 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-17                                                                                     :
-18     name(name),
-19     t1(NULL),
-20     activated(\textcolor{keyword}{false}),
-21     execDelay(delay),
-22     callback(cb),
-23     params(params)
-24 \{
-25     \textcolor{keywordflow}{if}(delay == 0)
-26     \{
-27         delay = 1;
-28     \}
-29 \}
+18                                                                                     :
+19     name(name),
+20     t1(NULL),
+21     activated(\textcolor{keyword}{false}),
+22     execDelay(delay),
+23     callback(cb),
+24     params(params)
+25 \{
+26     \textcolor{keywordflow}{if}(delay == 0)
+27     \{
+28         delay = 100;
+29     \}
+30 \}
 \end{DoxyCode}
 
 
@@ -108,13 +108,13 @@ True if the timer is activated
 \end{DoxyReturn}
 
 
-Definition at line 169 of file timer.\+cpp.
+Definition at line 184 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-170 \{
-171    \textcolor{keywordflow}{return} this->execDelay;
-172 \}
+185 \{
+186    \textcolor{keywordflow}{return} this->execDelay;
+187 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_a30d5e497b9bee9b2d00c7f511c85e84d}\label{classtimer_a30d5e497b9bee9b2d00c7f511c85e84d}} 
 \index{timer@{timer}!get\+Name@{get\+Name}}
@@ -127,13 +127,13 @@ Returns the current name of the timer
 \end{DoxyReturn}
 
 
-Definition at line 153 of file timer.\+cpp.
+Definition at line 168 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-154 \{
-155     \textcolor{keywordflow}{return} this->name;
-156 \}
+169 \{
+170     \textcolor{keywordflow}{return} this->name;
+171 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_a35c72b981bb55b98e979f83a988f434c}\label{classtimer_a35c72b981bb55b98e979f83a988f434c}} 
 \index{timer@{timer}!get\+State@{get\+State}}
@@ -146,13 +146,13 @@ True if the timer is activated
 \end{DoxyReturn}
 
 
-Definition at line 161 of file timer.\+cpp.
+Definition at line 176 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-162 \{
-163     \textcolor{keywordflow}{return} this->activated;
-164 \}
+177 \{
+178     \textcolor{keywordflow}{return} this->activated;
+179 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_a75f1f309bb222687385ede7d2d8233c3}\label{classtimer_a75f1f309bb222687385ede7d2d8233c3}} 
 \index{timer@{timer}!set\+Callback@{set\+Callback}}
@@ -165,23 +165,31 @@ True if the timer is activated
 \end{DoxyReturn}
 
 
-Definition at line 194 of file timer.\+cpp.
+Definition at line 217 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-195 \{
-196     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
-197     \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}{stop}() == \textcolor{keyword}{true})
-198     \{
-199         this->callback = cb;
-200         this->params = params;
-201         \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}{start}() == \textcolor{keyword}{true})
-202         \{
-203             ret = \textcolor{keyword}{true};
-204         \}
-205     \}
-206     \textcolor{keywordflow}{return}(ret);
-207 \}
+218 \{
+219     \textcolor{comment}{//If object contains empty parameters}
+220     \textcolor{keywordflow}{if}(this->callback == NULL)
+221     \{
+222         this->callback = cb;
+223         this->params = params;
+224         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+225     \}
+226 
+227     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+228     \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}{stop}() == \textcolor{keyword}{true})
+229     \{
+230         this->callback = cb;
+231         this->params = params;
+232         \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}{start}() == \textcolor{keyword}{true})
+233         \{
+234             ret = \textcolor{keyword}{true};
+235         \}
+236     \}
+237     \textcolor{keywordflow}{return}(ret);
+238 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}\label{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}} 
 \index{timer@{timer}!set\+Delay@{set\+Delay}}
@@ -194,22 +202,30 @@ True if the timer is activated
 \end{DoxyReturn}
 
 
-Definition at line 177 of file timer.\+cpp.
+Definition at line 192 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-178 \{
-179     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
-180     \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}{stop}() == \textcolor{keyword}{true})
-181     \{
-182         this->execDelay = newDelay;
-183         \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}{start}() == \textcolor{keyword}{true})
-184         \{
-185             ret = \textcolor{keyword}{true};
-186         \}
-187     \}
-188     \textcolor{keywordflow}{return}(ret);
-189 \}
+193 \{
+194     \textcolor{comment}{//If object contains empty parameters}
+195     \textcolor{keywordflow}{if}(this->callback == NULL)
+196     \{
+197         this->execDelay = newDelay;
+198         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+199     \}
+200 
+201     \textcolor{comment}{//If callback as been given}
+202     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+203     \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}{stop}() == \textcolor{keyword}{true})
+204     \{
+205         this->execDelay = newDelay;
+206         \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}{start}() == \textcolor{keyword}{true})
+207         \{
+208             ret = \textcolor{keyword}{true};
+209         \}
+210     \}
+211     \textcolor{keywordflow}{return}(ret);
+212 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_ae3dce84bbcd9a7022a20e2b63174aa61}\label{classtimer_ae3dce84bbcd9a7022a20e2b63174aa61}} 
 \index{timer@{timer}!set\+Name@{set\+Name}}
@@ -222,13 +238,13 @@ Returns true if the change is successful
 \end{DoxyReturn}
 
 
-Definition at line 145 of file timer.\+cpp.
+Definition at line 160 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-146 \{
-147     this->name = newName;
-148 \}
+161 \{
+162     this->name = newName;
+163 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}\label{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}} 
 \index{timer@{timer}!start@{start}}
@@ -239,39 +255,53 @@ Definition at line 145 of file timer.\+cpp.
 Start the timer \begin{DoxyReturn}{Returns}
 Return a boolean representing the success or failure of the function. 
 \end{DoxyReturn}
+if the delay is not smaller than
 
+the max value for int 
 
-Definition at line 61 of file timer.\+cpp.
+Definition at line 62 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-62 \{
-63     std::mutex m;
-64     m.try\_lock();
-65     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
-66     \textcolor{comment}{//if the object is already timing,}
-67     \textcolor{keywordflow}{if}(this->t1 != NULL)
-68     \{
-69         ret = \textcolor{keyword}{false};
-70     \}
-71     \textcolor{keywordflow}{else}
-72     \{
-73         \textcolor{comment}{//Go ahead}
-74         \textcolor{keywordflow}{try}
-75         \{
-76             this->activated = \textcolor{keyword}{true};
-77             t1 = \textcolor{keyword}{new} std::thread(&timer::count, \textcolor{keyword}{this});
-78             ret = \textcolor{keyword}{true};
-79         \}
-80         \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception& e)
-81         \{
-82             std::cerr << e.what() << \textcolor{charliteral}{'\(\backslash\)n'};
-83             ret = \textcolor{keyword}{false};
-84         \}
-85     \}
-86     m.unlock();
-87     \textcolor{keywordflow}{return} ret;
-88 \}
+63 \{
+64     \textcolor{comment}{//if no callback function was given}
+65     \textcolor{keywordflow}{if}(this->callback == NULL)
+66     \{
+67         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+68     \}
+69     \textcolor{comment}{// prevent integer overflow}
+70     \textcolor{keywordflow}{if}(!(this->execDelay < UINT\_MAX))    
+71     \{
+73         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+74     \}
+75     
+76 
+77     std::mutex m;
+78     m.try\_lock();
+79     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+80     \textcolor{comment}{//if the object is already timing or callback hasnt been provided,}
+81     \textcolor{keywordflow}{if}(this->t1 != NULL)
+82     \{
+83         ret = \textcolor{keyword}{false};
+84     \}
+85     \textcolor{keywordflow}{else}
+86     \{
+87         \textcolor{comment}{//Go ahead}
+88         \textcolor{keywordflow}{try}
+89         \{
+90             this->activated = \textcolor{keyword}{true};
+91             t1 = \textcolor{keyword}{new} std::thread(&timer::count, \textcolor{keyword}{this});
+92             ret = \textcolor{keyword}{true};
+93         \}
+94         \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception& e)
+95         \{
+96             std::cerr << e.what() << \textcolor{charliteral}{'\(\backslash\)n'};
+97             ret = \textcolor{keyword}{false};
+98         \}
+99     \}
+100     m.unlock();
+101     \textcolor{keywordflow}{return} ret;
+102 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}\label{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}} 
 \index{timer@{timer}!stop@{stop}}
@@ -284,38 +314,41 @@ Return a boolean representing the success or failure of the function.
 \end{DoxyReturn}
 
 
-Definition at line 94 of file timer.\+cpp.
+Definition at line 108 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-95 \{
-96     std::mutex m;
-97     m.try\_lock();
-98     \textcolor{comment}{//return value}
-99     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
-100     \textcolor{keywordflow}{try}
-101     \{    
-102         \textcolor{keywordflow}{if}(t1 != NULL)
-103         \{
-104             \textcolor{comment}{//Change the object's state}
-105             this->activated = \textcolor{keyword}{false};
-106             \textcolor{comment}{//Cleanup the thread}
-107             this->t1->join();
-108             \textcolor{keyword}{delete} this->t1;
-109 
-110             \textcolor{comment}{//Resetting the pointer as available}
-111             this->t1 = NULL;
-112         \}
-113     \}
-114     \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception& e)
-115     \{
-116         \textcolor{comment}{//Error handling with a stack trace}
-117         std::cerr << e.what() << \textcolor{charliteral}{'\(\backslash\)n'};
-118         ret = \textcolor{keyword}{false};
-119     \}
-120     m.unlock();
-121     \textcolor{keywordflow}{return} ret;
-122 \}
+109 \{
+110     \textcolor{comment}{//If the thread doesnt exist}
+111     \textcolor{keywordflow}{if}(this->t1 == NULL)
+112     \{
+113         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+114     \};
+115     
+116     std::mutex m;
+117     m.try\_lock();
+118     \textcolor{comment}{//return value}
+119     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+120     \textcolor{keywordflow}{try}
+121     \{    
+122         \textcolor{comment}{//Change the object's state}
+123         this->activated = \textcolor{keyword}{false};
+124         \textcolor{comment}{//Cleanup the thread}
+125         this->t1->join();
+126         \textcolor{keyword}{delete} this->t1;
+127         \textcolor{comment}{//Resetting the pointer as available}
+128         this->t1 = NULL;
+129         ret = \textcolor{keyword}{true};
+130     \}
+131     \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception& e)
+132     \{
+133         \textcolor{comment}{//Error handling with a stack trace}
+134         std::cerr << e.what() << \textcolor{charliteral}{'\(\backslash\)n'};
+135         ret = \textcolor{keyword}{false};
+136     \}
+137     m.unlock();
+138     \textcolor{keywordflow}{return} ret;
+139 \}
 \end{DoxyCode}
 \mbox{\Hypertarget{classtimer_a8c068c53de6269fc3ced75cf27bf4ea6}\label{classtimer_a8c068c53de6269fc3ced75cf27bf4ea6}} 
 \index{timer@{timer}!to\+\_\+string@{to\+\_\+string}}
@@ -328,25 +361,25 @@ Return a string describing the state of the timer
 \end{DoxyReturn}
 
 
-Definition at line 40 of file timer.\+cpp.
+Definition at line 41 of file timer.\+cpp.
 
 
 \begin{DoxyCode}
-41 \{
-42     std::string ret;
-43     std::string state;
-44     \textcolor{keywordflow}{if}(this->activated == \textcolor{keyword}{true})
-45     \{
-46         state = \textcolor{stringliteral}{"This timer is currently active"};
-47     \}
-48     \textcolor{keywordflow}{else}
-49     \{
-50         state = \textcolor{stringliteral}{"This timer is currently idle"};
-51     \}
-52     
-53     ret = this->name + \textcolor{stringliteral}{" : a is set with a timer of "} + std::to\_string(this->execDelay) + \textcolor{stringliteral}{"ms. "} + state ;
-54     \textcolor{keywordflow}{return} ret;
-55 \}
+42 \{
+43     std::string ret;
+44     std::string state;
+45     \textcolor{keywordflow}{if}(this->activated == \textcolor{keyword}{true})
+46     \{
+47         state = \textcolor{stringliteral}{"This timer is currently active"};
+48     \}
+49     \textcolor{keywordflow}{else}
+50     \{
+51         state = \textcolor{stringliteral}{"This timer is currently idle"};
+52     \}
+53     
+54     ret = this->name + \textcolor{stringliteral}{" : a is set with a timer of "} + std::to\_string(this->execDelay) + \textcolor{stringliteral}{"ms. "} + state ;
+55     \textcolor{keywordflow}{return} ret;
+56 \}
 \end{DoxyCode}
 
 

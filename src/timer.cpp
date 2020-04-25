@@ -4,6 +4,7 @@
 #include <thread>
 #include <mutex>
 #include <exception>
+#include <limits.h>
 #include "timer.hpp"
 
 //!Constructors
@@ -24,7 +25,7 @@ timer::timer(std::string name, unsigned int delay, void (*cb)(void * p), void * 
 {
     if(delay == 0)
     {
-        delay = 1;
+        delay = 100;
     }
 }
 
@@ -60,10 +61,18 @@ std::string timer::to_string()
  */
 bool timer::start()
 {
+    //if no callback function was given
     if(this->callback == NULL)
     {
         return false;
     }
+    // prevent integer overflow
+    if(!(this->execDelay < UINT_MAX))    //! if the delay is not smaller than 
+                                        //! the max value for int
+    {
+        return false;
+    }
+    
 
     std::mutex m;
     m.try_lock();
@@ -98,7 +107,11 @@ bool timer::start()
  */
 bool timer::stop()
 {
-    if(this->t1 == NULL){return false;};
+    //If the thread doesnt exist
+    if(this->t1 == NULL)
+    {
+        return false;
+    };
     
     std::mutex m;
     m.try_lock();
@@ -120,7 +133,6 @@ bool timer::stop()
         //Error handling with a stack trace
         std::cerr << e.what() << '\n';
         ret = false;
-       
     }
     m.unlock();
     return ret;

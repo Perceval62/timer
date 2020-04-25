@@ -10,9 +10,11 @@ class timerTestCase
         bool testCombination();
         bool getTestValidity();
 
+        std::string name;
+        
     private:
         bool isValid;
-        std::string name;
+        
         unsigned int delay;
         void (*cb)(void *);
         void * params;
