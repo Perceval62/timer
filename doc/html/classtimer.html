@@ -73,9 +73,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac478d66266a60195b83059b1f7447c7b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtimer.html#ac478d66266a60195b83059b1f7447c7b">timer</a> (std::string name, unsigned int delay, void(*cb)())</td></tr>
-<tr class="memdesc:ac478d66266a60195b83059b1f7447c7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructors.  <a href="#ac478d66266a60195b83059b1f7447c7b">More...</a><br /></td></tr>
-<tr class="separator:ac478d66266a60195b83059b1f7447c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8d672339f972a1146ea2d90ca2ef89a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtimer.html#ac8d672339f972a1146ea2d90ca2ef89a">timer</a> (std::string name, unsigned int delay, void(*cb)(void *), void *params)</td></tr>
+<tr class="memdesc:ac8d672339f972a1146ea2d90ca2ef89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructors.  <a href="#ac8d672339f972a1146ea2d90ca2ef89a">More...</a><br /></td></tr>
+<tr class="separator:ac8d672339f972a1146ea2d90ca2ef89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee05958ea6b0fbf36ea1fd22747cd546"><td class="memItemLeft" align="right" valign="top"><a id="aee05958ea6b0fbf36ea1fd22747cd546"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtimer.html#aee05958ea6b0fbf36ea1fd22747cd546">~timer</a> ()</td></tr>
 <tr class="memdesc:aee05958ea6b0fbf36ea1fd22747cd546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -96,15 +96,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab00cba4ccf638a425b9f6db10d2fd16f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd8ddd948bf96185cf3c1e0a4cf60264"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtimer.html#acd8ddd948bf96185cf3c1e0a4cf60264">setDelay</a> (unsigned int newDelay)</td></tr>
 <tr class="separator:acd8ddd948bf96185cf3c1e0a4cf60264"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68517332f9664a28d04df45911127d1a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtimer.html#a68517332f9664a28d04df45911127d1a">setCallback</a> (void(*cb)())</td></tr>
-<tr class="separator:a68517332f9664a28d04df45911127d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f1f309bb222687385ede7d2d8233c3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtimer.html#a75f1f309bb222687385ede7d2d8233c3">setCallback</a> (void(*cb)(void *), void *params)</td></tr>
+<tr class="separator:a75f1f309bb222687385ede7d2d8233c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>timer myTimer("myTimerName", 1000, myFunc) </p>
 <p>This is an implementation of a timer in cpp. It is initialised with a callback function that is to be called at certain intervals </p><dl class="section author"><dt>Author</dt><dd>Vincent Perrier </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>25-04-2020 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="timer_8hpp_source.html#l00014">14</a> of file <a class="el" href="timer_8hpp_source.html">timer.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac478d66266a60195b83059b1f7447c7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac478d66266a60195b83059b1f7447c7b">&#9670;&nbsp;</a></span>timer()</h2>
+<a id="ac8d672339f972a1146ea2d90ca2ef89a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8d672339f972a1146ea2d90ca2ef89a">&#9670;&nbsp;</a></span>timer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -124,8 +127,14 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)()&#160;</td>
-          <td class="paramname"><em>cb</em>&#160;</td>
+          <td class="paramtype">void(*)(void *)&#160;</td>
+          <td class="paramname"><em>cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>params</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -141,10 +150,13 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramname">name</td><td>unique name of the timer. Used for getting a description. </td></tr>
     <tr><td class="paramname">delay</td><td>The interval at which the callback function is going to be called. </td></tr>
     <tr><td class="paramname">cb</td><td>The function to call at the given interval. </td></tr>
+    <tr><td class="paramname">params</td><td>Parameters to be given to the callback function </td></tr>
   </table>
   </dd>
 </dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00017">17</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                                                                                    :</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    name(name),</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    t1(NULL),</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    activated(<span class="keyword">false</span>),</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    execDelay(delay),</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    callback(cb),</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    params(params)</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordflow">if</span>(delay == 0)</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        delay = 1;</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -164,6 +176,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the current delay of the timer </p><dl class="section return"><dt>Returns</dt><dd>True if the timer is activated </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00169">169</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;{</div><div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;   <span class="keywordflow">return</span> this-&gt;execDelay;</div><div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a30d5e497b9bee9b2d00c7f511c85e84d"></a>
@@ -182,6 +196,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the current name of the timer </p><dl class="section return"><dt>Returns</dt><dd>Returns the current name of the timer </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00153">153</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;{</div><div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">return</span> this-&gt;name;</div><div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a35c72b981bb55b98e979f83a988f434c"></a>
@@ -200,10 +216,12 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the current state of the timer </p><dl class="section return"><dt>Returns</dt><dd>True if the timer is activated </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00161">161</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;{</div><div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">return</span> this-&gt;activated;</div><div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
-<a id="a68517332f9664a28d04df45911127d1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68517332f9664a28d04df45911127d1a">&#9670;&nbsp;</a></span>setCallback()</h2>
+<a id="a75f1f309bb222687385ede7d2d8233c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75f1f309bb222687385ede7d2d8233c3">&#9670;&nbsp;</a></span>setCallback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,14 +229,28 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool timer::setCallback </td>
           <td>(</td>
-          <td class="paramtype">void(*)()&#160;</td>
-          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td class="paramtype">void(*)(void *)&#160;</td>
+          <td class="paramname"><em>cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Changes the current callback function of the timer </p><dl class="section return"><dt>Returns</dt><dd>True if the timer is activated </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00194">194</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;{</div><div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keywordtype">bool</span> ret = <span class="keyword">false</span>;</div><div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keywordflow">if</span>(this-&gt;<a class="code" href="classtimer.html#ad21a0c9113d870f8485b775f1fcd3c73">stop</a>() == <span class="keyword">true</span>)</div><div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    {</div><div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        this-&gt;callback = cb;</div><div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        this-&gt;params = params;</div><div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        <span class="keywordflow">if</span>(this-&gt;<a class="code" href="classtimer.html#adad85b4705278d4cb8a2a4f3286cc2c7">start</a>() == <span class="keyword">true</span>)</div><div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        {</div><div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            ret = <span class="keyword">true</span>;</div><div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        }</div><div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    }</div><div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordflow">return</span>(ret);</div><div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div><div class="ttc" id="classtimer_html_adad85b4705278d4cb8a2a4f3286cc2c7"><div class="ttname"><a href="classtimer.html#adad85b4705278d4cb8a2a4f3286cc2c7">timer::start</a></div><div class="ttdeci">bool start()</div><div class="ttdef"><b>Definition:</b> <a href="timer_8cpp_source.html#l00061">timer.cpp:61</a></div></div>
+<div class="ttc" id="classtimer_html_ad21a0c9113d870f8485b775f1fcd3c73"><div class="ttname"><a href="classtimer.html#ad21a0c9113d870f8485b775f1fcd3c73">timer::stop</a></div><div class="ttdeci">bool stop()</div><div class="ttdef"><b>Definition:</b> <a href="timer_8cpp_source.html#l00094">timer.cpp:94</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acd8ddd948bf96185cf3c1e0a4cf60264"></a>
@@ -238,6 +270,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Changes the current execution interval of the timer </p><dl class="section return"><dt>Returns</dt><dd>True if the timer is activated </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00177">177</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;{</div><div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordtype">bool</span> ret = <span class="keyword">false</span>;</div><div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordflow">if</span>(this-&gt;<a class="code" href="classtimer.html#ad21a0c9113d870f8485b775f1fcd3c73">stop</a>() == <span class="keyword">true</span>)</div><div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    {</div><div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        this-&gt;execDelay = newDelay;</div><div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keywordflow">if</span>(this-&gt;<a class="code" href="classtimer.html#adad85b4705278d4cb8a2a4f3286cc2c7">start</a>() == <span class="keyword">true</span>)</div><div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        {</div><div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;            ret = <span class="keyword">true</span>;</div><div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        }</div><div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    }</div><div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">return</span>(ret);</div><div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;}</div><div class="ttc" id="classtimer_html_adad85b4705278d4cb8a2a4f3286cc2c7"><div class="ttname"><a href="classtimer.html#adad85b4705278d4cb8a2a4f3286cc2c7">timer::start</a></div><div class="ttdeci">bool start()</div><div class="ttdef"><b>Definition:</b> <a href="timer_8cpp_source.html#l00061">timer.cpp:61</a></div></div>
+<div class="ttc" id="classtimer_html_ad21a0c9113d870f8485b775f1fcd3c73"><div class="ttname"><a href="classtimer.html#ad21a0c9113d870f8485b775f1fcd3c73">timer::stop</a></div><div class="ttdeci">bool stop()</div><div class="ttdef"><b>Definition:</b> <a href="timer_8cpp_source.html#l00094">timer.cpp:94</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae3dce84bbcd9a7022a20e2b63174aa61"></a>
@@ -257,6 +293,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Changes the name of the timer </p><dl class="section return"><dt>Returns</dt><dd>Returns true if the change is successful </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00145">145</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;{</div><div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    this-&gt;name = newName;</div><div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="adad85b4705278d4cb8a2a4f3286cc2c7"></a>
@@ -275,6 +313,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Start the timer </p><dl class="section return"><dt>Returns</dt><dd>Return a boolean representing the success or failure of the function. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00061">61</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    std::mutex m;</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    m.try_lock();</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> ret = <span class="keyword">false</span>;</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">//if the object is already timing,</span></div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span>(this-&gt;t1 != NULL)</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        ret = <span class="keyword">false</span>;</div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">else</span></div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">//Go ahead</span></div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">try</span></div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        {</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            this-&gt;activated = <span class="keyword">true</span>;</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            t1 = <span class="keyword">new</span> std::thread(&amp;timer::count, <span class="keyword">this</span>);</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            ret = <span class="keyword">true</span>;</div><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception&amp; e)</div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        {</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            std::cerr &lt;&lt; e.what() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            ret = <span class="keyword">false</span>;</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        }</div><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    m.unlock();</div><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">return</span> ret;</div><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="ad21a0c9113d870f8485b775f1fcd3c73"></a>
@@ -293,6 +333,8 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Stops the timer </p><dl class="section return"><dt>Returns</dt><dd>Return a boolean representing the success or failure of the function. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00094">94</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;{</div><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    std::mutex m;</div><div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    m.try_lock();</div><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="comment">//return value</span></div><div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">bool</span> ret = <span class="keyword">false</span>;</div><div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">try</span></div><div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    {    </div><div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">if</span>(t1 != NULL)</div><div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        {</div><div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="comment">//Change the object&#39;s state</span></div><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            this-&gt;activated = <span class="keyword">false</span>;</div><div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="comment">//Cleanup the thread</span></div><div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            this-&gt;t1-&gt;join();</div><div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keyword">delete</span> this-&gt;t1;</div><div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div><div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="comment">//Resetting the pointer as available</span></div><div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            this-&gt;t1 = NULL;</div><div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        }</div><div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    }</div><div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception&amp; e)</div><div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    {</div><div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="comment">//Error handling with a stack trace</span></div><div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        std::cerr &lt;&lt; e.what() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div><div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        ret = <span class="keyword">false</span>;</div><div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    }</div><div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    m.unlock();</div><div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> ret;</div><div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a8c068c53de6269fc3ced75cf27bf4ea6"></a>
@@ -311,11 +353,13 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Return a string describing the state of the timer </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="timer_8cpp_source.html#l00040">40</a> of file <a class="el" href="timer_8cpp_source.html">timer.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::string ret;</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    std::string state;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">if</span>(this-&gt;activated == <span class="keyword">true</span>)</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    {</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        state = <span class="stringliteral">&quot;This timer is currently active&quot;</span>;</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">else</span></div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    {</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        state = <span class="stringliteral">&quot;This timer is currently idle&quot;</span>;</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    </div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    ret = this-&gt;name + <span class="stringliteral">&quot; : a is set with a timer of &quot;</span> + std::to_string(this-&gt;execDelay) + <span class="stringliteral">&quot;ms. &quot;</span> + state ;</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span> ret;</div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="timer_8hpp_source.html">timer.hpp</a></li>
-<li>src/timer.cpp</li>
+<li>src/<a class="el" href="timer_8cpp_source.html">timer.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -12,7 +12,7 @@ timer my\+Timer(\char`\"{}my\+Timer\+Name\char`\"{}, 1000, my\+Func)
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classtimer_ac478d66266a60195b83059b1f7447c7b}{timer} (std\+::string name, unsigned int delay, void($\ast$cb)())
+\hyperlink{classtimer_ac8d672339f972a1146ea2d90ca2ef89a}{timer} (std\+::string name, unsigned int delay, void($\ast$cb)(void $\ast$), void $\ast$params)
 \begin{DoxyCompactList}\small\item\em Constructors. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classtimer_aee05958ea6b0fbf36ea1fd22747cd546}\label{classtimer_aee05958ea6b0fbf36ea1fd22747cd546}} 
 \hyperlink{classtimer_aee05958ea6b0fbf36ea1fd22747cd546}{$\sim$timer} ()
@@ -33,7 +33,7 @@ unsigned int \hyperlink{classtimer_ab00cba4ccf638a425b9f6db10d2fd16f}{get\+Delay
 \item 
 bool \hyperlink{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}{set\+Delay} (unsigned int new\+Delay)
 \item 
-bool \hyperlink{classtimer_a68517332f9664a28d04df45911127d1a}{set\+Callback} (void($\ast$cb)())
+bool \hyperlink{classtimer_a75f1f309bb222687385ede7d2d8233c3}{set\+Callback} (void($\ast$cb)(void $\ast$), void $\ast$params)
 \end{DoxyCompactItemize}
 
 
@@ -43,14 +43,21 @@ timer my\+Timer(\char`\"{}my\+Timer\+Name\char`\"{}, 1000, my\+Func)
 This is an implementation of a timer in cpp. It is initialised with a callback function that is to be called at certain intervals \begin{DoxyAuthor}{Author}
 Vincent Perrier 
 \end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+25-\/04-\/2020 
+\end{DoxyDate}
+
+
+Definition at line 14 of file timer.\+hpp.
+
 
 
 \subsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classtimer_ac478d66266a60195b83059b1f7447c7b}\label{classtimer_ac478d66266a60195b83059b1f7447c7b}} 
+\mbox{\Hypertarget{classtimer_ac8d672339f972a1146ea2d90ca2ef89a}\label{classtimer_ac8d672339f972a1146ea2d90ca2ef89a}} 
 \index{timer@{timer}!timer@{timer}}
 \index{timer@{timer}!timer@{timer}}
 \subsubsection{\texorpdfstring{timer()}{timer()}}
-{\footnotesize\ttfamily timer\+::timer (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{unsigned int}]{delay,  }\item[{void($\ast$)()}]{cb }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily timer\+::timer (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{unsigned int}]{delay,  }\item[{void($\ast$)(void $\ast$)}]{cb,  }\item[{void $\ast$}]{params }\end{DoxyParamCaption})}
 
 
 
@@ -64,7 +71,29 @@ Constructors.
 \hline
 {\em cb} & The function to call at the given interval. \\
 \hline
+{\em params} & Parameters to be given to the callback function \\
+\hline
 \end{DoxyParams}
+
+
+Definition at line 17 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+17                                                                                     :
+18     name(name),
+19     t1(NULL),
+20     activated(\textcolor{keyword}{false}),
+21     execDelay(delay),
+22     callback(cb),
+23     params(params)
+24 \{
+25     \textcolor{keywordflow}{if}(delay == 0)
+26     \{
+27         delay = 1;
+28     \}
+29 \}
+\end{DoxyCode}
 
 
 \subsection{Member Function Documentation}
@@ -77,6 +106,16 @@ Constructors.
 Gets the current delay of the timer \begin{DoxyReturn}{Returns}
 True if the timer is activated 
 \end{DoxyReturn}
+
+
+Definition at line 169 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+170 \{
+171    \textcolor{keywordflow}{return} this->execDelay;
+172 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{classtimer_a30d5e497b9bee9b2d00c7f511c85e84d}\label{classtimer_a30d5e497b9bee9b2d00c7f511c85e84d}} 
 \index{timer@{timer}!get\+Name@{get\+Name}}
 \index{get\+Name@{get\+Name}!timer@{timer}}
@@ -86,6 +125,16 @@ True if the timer is activated
 Gets the current name of the timer \begin{DoxyReturn}{Returns}
 Returns the current name of the timer 
 \end{DoxyReturn}
+
+
+Definition at line 153 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+154 \{
+155     \textcolor{keywordflow}{return} this->name;
+156 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{classtimer_a35c72b981bb55b98e979f83a988f434c}\label{classtimer_a35c72b981bb55b98e979f83a988f434c}} 
 \index{timer@{timer}!get\+State@{get\+State}}
 \index{get\+State@{get\+State}!timer@{timer}}
@@ -95,15 +144,45 @@ Returns the current name of the timer
 Gets the current state of the timer \begin{DoxyReturn}{Returns}
 True if the timer is activated 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classtimer_a68517332f9664a28d04df45911127d1a}\label{classtimer_a68517332f9664a28d04df45911127d1a}} 
+
+
+Definition at line 161 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+162 \{
+163     \textcolor{keywordflow}{return} this->activated;
+164 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{classtimer_a75f1f309bb222687385ede7d2d8233c3}\label{classtimer_a75f1f309bb222687385ede7d2d8233c3}} 
 \index{timer@{timer}!set\+Callback@{set\+Callback}}
 \index{set\+Callback@{set\+Callback}!timer@{timer}}
 \subsubsection{\texorpdfstring{set\+Callback()}{setCallback()}}
-{\footnotesize\ttfamily bool timer\+::set\+Callback (\begin{DoxyParamCaption}\item[{void($\ast$)()}]{cb }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool timer\+::set\+Callback (\begin{DoxyParamCaption}\item[{void($\ast$)(void $\ast$)}]{cb,  }\item[{void $\ast$}]{params }\end{DoxyParamCaption})}
 
 Changes the current callback function of the timer \begin{DoxyReturn}{Returns}
 True if the timer is activated 
 \end{DoxyReturn}
+
+
+Definition at line 194 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+195 \{
+196     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+197     \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}{stop}() == \textcolor{keyword}{true})
+198     \{
+199         this->callback = cb;
+200         this->params = params;
+201         \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}{start}() == \textcolor{keyword}{true})
+202         \{
+203             ret = \textcolor{keyword}{true};
+204         \}
+205     \}
+206     \textcolor{keywordflow}{return}(ret);
+207 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}\label{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}} 
 \index{timer@{timer}!set\+Delay@{set\+Delay}}
 \index{set\+Delay@{set\+Delay}!timer@{timer}}
@@ -113,6 +192,25 @@ True if the timer is activated
 Changes the current execution interval of the timer \begin{DoxyReturn}{Returns}
 True if the timer is activated 
 \end{DoxyReturn}
+
+
+Definition at line 177 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+178 \{
+179     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+180     \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}{stop}() == \textcolor{keyword}{true})
+181     \{
+182         this->execDelay = newDelay;
+183         \textcolor{keywordflow}{if}(this->\hyperlink{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}{start}() == \textcolor{keyword}{true})
+184         \{
+185             ret = \textcolor{keyword}{true};
+186         \}
+187     \}
+188     \textcolor{keywordflow}{return}(ret);
+189 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{classtimer_ae3dce84bbcd9a7022a20e2b63174aa61}\label{classtimer_ae3dce84bbcd9a7022a20e2b63174aa61}} 
 \index{timer@{timer}!set\+Name@{set\+Name}}
 \index{set\+Name@{set\+Name}!timer@{timer}}
@@ -122,6 +220,16 @@ True if the timer is activated
 Changes the name of the timer \begin{DoxyReturn}{Returns}
 Returns true if the change is successful 
 \end{DoxyReturn}
+
+
+Definition at line 145 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+146 \{
+147     this->name = newName;
+148 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}\label{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}} 
 \index{timer@{timer}!start@{start}}
 \index{start@{start}!timer@{timer}}
@@ -131,6 +239,40 @@ Returns true if the change is successful
 Start the timer \begin{DoxyReturn}{Returns}
 Return a boolean representing the success or failure of the function. 
 \end{DoxyReturn}
+
+
+Definition at line 61 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+62 \{
+63     std::mutex m;
+64     m.try\_lock();
+65     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+66     \textcolor{comment}{//if the object is already timing,}
+67     \textcolor{keywordflow}{if}(this->t1 != NULL)
+68     \{
+69         ret = \textcolor{keyword}{false};
+70     \}
+71     \textcolor{keywordflow}{else}
+72     \{
+73         \textcolor{comment}{//Go ahead}
+74         \textcolor{keywordflow}{try}
+75         \{
+76             this->activated = \textcolor{keyword}{true};
+77             t1 = \textcolor{keyword}{new} std::thread(&timer::count, \textcolor{keyword}{this});
+78             ret = \textcolor{keyword}{true};
+79         \}
+80         \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception& e)
+81         \{
+82             std::cerr << e.what() << \textcolor{charliteral}{'\(\backslash\)n'};
+83             ret = \textcolor{keyword}{false};
+84         \}
+85     \}
+86     m.unlock();
+87     \textcolor{keywordflow}{return} ret;
+88 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}\label{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}} 
 \index{timer@{timer}!stop@{stop}}
 \index{stop@{stop}!timer@{timer}}
@@ -140,6 +282,41 @@ Return a boolean representing the success or failure of the function.
 Stops the timer \begin{DoxyReturn}{Returns}
 Return a boolean representing the success or failure of the function. 
 \end{DoxyReturn}
+
+
+Definition at line 94 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+95 \{
+96     std::mutex m;
+97     m.try\_lock();
+98     \textcolor{comment}{//return value}
+99     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{false};
+100     \textcolor{keywordflow}{try}
+101     \{    
+102         \textcolor{keywordflow}{if}(t1 != NULL)
+103         \{
+104             \textcolor{comment}{//Change the object's state}
+105             this->activated = \textcolor{keyword}{false};
+106             \textcolor{comment}{//Cleanup the thread}
+107             this->t1->join();
+108             \textcolor{keyword}{delete} this->t1;
+109 
+110             \textcolor{comment}{//Resetting the pointer as available}
+111             this->t1 = NULL;
+112         \}
+113     \}
+114     \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception& e)
+115     \{
+116         \textcolor{comment}{//Error handling with a stack trace}
+117         std::cerr << e.what() << \textcolor{charliteral}{'\(\backslash\)n'};
+118         ret = \textcolor{keyword}{false};
+119     \}
+120     m.unlock();
+121     \textcolor{keywordflow}{return} ret;
+122 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{classtimer_a8c068c53de6269fc3ced75cf27bf4ea6}\label{classtimer_a8c068c53de6269fc3ced75cf27bf4ea6}} 
 \index{timer@{timer}!to\+\_\+string@{to\+\_\+string}}
 \index{to\+\_\+string@{to\+\_\+string}!timer@{timer}}
@@ -149,6 +326,28 @@ Return a boolean representing the success or failure of the function.
 \begin{DoxyReturn}{Returns}
 Return a string describing the state of the timer 
 \end{DoxyReturn}
+
+
+Definition at line 40 of file timer.\+cpp.
+
+
+\begin{DoxyCode}
+41 \{
+42     std::string ret;
+43     std::string state;
+44     \textcolor{keywordflow}{if}(this->activated == \textcolor{keyword}{true})
+45     \{
+46         state = \textcolor{stringliteral}{"This timer is currently active"};
+47     \}
+48     \textcolor{keywordflow}{else}
+49     \{
+50         state = \textcolor{stringliteral}{"This timer is currently idle"};
+51     \}
+52     
+53     ret = this->name + \textcolor{stringliteral}{" : a is set with a timer of "} + std::to\_string(this->execDelay) + \textcolor{stringliteral}{"ms. "} + state ;
+54     \textcolor{keywordflow}{return} ret;
+55 \}
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

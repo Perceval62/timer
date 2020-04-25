@@ -8,7 +8,8 @@
  * \brief timer myTimer("myTimerName", 1000, myFunc)
  * 
  * This is an implementation of a timer in cpp. It is initialised with a callback function that is to be called at certain intervals
- * \author Vincent Perrier
+ * \author  Vincent Perrier
+ * \date    25-04-2020 
  */
 class timer
 {
@@ -73,7 +74,7 @@ class timer
         /** Changes the current callback function of the timer
          * \return True if the timer is activated
          */
-        bool setCallback(void (*cb)(void *));
+        bool setCallback(void (*cb)(void *), void * params);
 
     private:
 

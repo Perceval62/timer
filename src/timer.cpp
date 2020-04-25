@@ -191,12 +191,13 @@ bool timer::setDelay(unsigned int newDelay)
 /** Changes the current callback function of the timer
  * \return True if the timer is activated
  */
-bool timer::setCallback(void (*cb)(void *))
+bool timer::setCallback(void (*cb)(void *), void * params)
 {
     bool ret = false;
     if(this->stop() == true)
     {
         this->callback = cb;
+        this->params = params;
         if(this->start() == true)
         {
             ret = true;
