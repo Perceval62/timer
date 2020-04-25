@@ -1,0 +1,157 @@
+\hypertarget{classtimer}{}\section{timer Class Reference}
+\label{classtimer}\index{timer@{timer}}
+
+
+timer my\+Timer(\char`\"{}my\+Timer\+Name\char`\"{}, 1000, my\+Func)  
+
+
+
+
+{\ttfamily \#include $<$timer.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtimer_ac478d66266a60195b83059b1f7447c7b}{timer} (std\+::string name, unsigned int delay, void($\ast$cb)())
+\begin{DoxyCompactList}\small\item\em Constructors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtimer_aee05958ea6b0fbf36ea1fd22747cd546}\label{classtimer_aee05958ea6b0fbf36ea1fd22747cd546}} 
+\hyperlink{classtimer_aee05958ea6b0fbf36ea1fd22747cd546}{$\sim$timer} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{classtimer_a8c068c53de6269fc3ced75cf27bf4ea6}{to\+\_\+string} ()
+\item 
+bool \hyperlink{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}{start} ()
+\item 
+bool \hyperlink{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}{stop} ()
+\item 
+void \hyperlink{classtimer_ae3dce84bbcd9a7022a20e2b63174aa61}{set\+Name} (std\+::string new\+Name)
+\item 
+std\+::string \hyperlink{classtimer_a30d5e497b9bee9b2d00c7f511c85e84d}{get\+Name} ()
+\item 
+bool \hyperlink{classtimer_a35c72b981bb55b98e979f83a988f434c}{get\+State} ()
+\item 
+unsigned int \hyperlink{classtimer_ab00cba4ccf638a425b9f6db10d2fd16f}{get\+Delay} ()
+\item 
+bool \hyperlink{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}{set\+Delay} (unsigned int new\+Delay)
+\item 
+bool \hyperlink{classtimer_a68517332f9664a28d04df45911127d1a}{set\+Callback} (void($\ast$cb)())
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+timer my\+Timer(\char`\"{}my\+Timer\+Name\char`\"{}, 1000, my\+Func) 
+
+This is an implementation of a timer in cpp. It is initialised with a callback function that is to be called at certain intervals \begin{DoxyAuthor}{Author}
+Vincent Perrier 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtimer_ac478d66266a60195b83059b1f7447c7b}\label{classtimer_ac478d66266a60195b83059b1f7447c7b}} 
+\index{timer@{timer}!timer@{timer}}
+\index{timer@{timer}!timer@{timer}}
+\subsubsection{\texorpdfstring{timer()}{timer()}}
+{\footnotesize\ttfamily timer\+::timer (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{unsigned int}]{delay,  }\item[{void($\ast$)()}]{cb }\end{DoxyParamCaption})}
+
+
+
+Constructors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & unique name of the timer. Used for getting a description. \\
+\hline
+{\em delay} & The interval at which the callback function is going to be called. \\
+\hline
+{\em cb} & The function to call at the given interval. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtimer_ab00cba4ccf638a425b9f6db10d2fd16f}\label{classtimer_ab00cba4ccf638a425b9f6db10d2fd16f}} 
+\index{timer@{timer}!get\+Delay@{get\+Delay}}
+\index{get\+Delay@{get\+Delay}!timer@{timer}}
+\subsubsection{\texorpdfstring{get\+Delay()}{getDelay()}}
+{\footnotesize\ttfamily unsigned int timer\+::get\+Delay (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gets the current delay of the timer \begin{DoxyReturn}{Returns}
+True if the timer is activated 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_a30d5e497b9bee9b2d00c7f511c85e84d}\label{classtimer_a30d5e497b9bee9b2d00c7f511c85e84d}} 
+\index{timer@{timer}!get\+Name@{get\+Name}}
+\index{get\+Name@{get\+Name}!timer@{timer}}
+\subsubsection{\texorpdfstring{get\+Name()}{getName()}}
+{\footnotesize\ttfamily std\+::string timer\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gets the current name of the timer \begin{DoxyReturn}{Returns}
+Returns the current name of the timer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_a35c72b981bb55b98e979f83a988f434c}\label{classtimer_a35c72b981bb55b98e979f83a988f434c}} 
+\index{timer@{timer}!get\+State@{get\+State}}
+\index{get\+State@{get\+State}!timer@{timer}}
+\subsubsection{\texorpdfstring{get\+State()}{getState()}}
+{\footnotesize\ttfamily bool timer\+::get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gets the current state of the timer \begin{DoxyReturn}{Returns}
+True if the timer is activated 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_a68517332f9664a28d04df45911127d1a}\label{classtimer_a68517332f9664a28d04df45911127d1a}} 
+\index{timer@{timer}!set\+Callback@{set\+Callback}}
+\index{set\+Callback@{set\+Callback}!timer@{timer}}
+\subsubsection{\texorpdfstring{set\+Callback()}{setCallback()}}
+{\footnotesize\ttfamily bool timer\+::set\+Callback (\begin{DoxyParamCaption}\item[{void($\ast$)()}]{cb }\end{DoxyParamCaption})}
+
+Changes the current callback function of the timer \begin{DoxyReturn}{Returns}
+True if the timer is activated 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}\label{classtimer_acd8ddd948bf96185cf3c1e0a4cf60264}} 
+\index{timer@{timer}!set\+Delay@{set\+Delay}}
+\index{set\+Delay@{set\+Delay}!timer@{timer}}
+\subsubsection{\texorpdfstring{set\+Delay()}{setDelay()}}
+{\footnotesize\ttfamily bool timer\+::set\+Delay (\begin{DoxyParamCaption}\item[{unsigned int}]{new\+Delay }\end{DoxyParamCaption})}
+
+Changes the current execution interval of the timer \begin{DoxyReturn}{Returns}
+True if the timer is activated 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_ae3dce84bbcd9a7022a20e2b63174aa61}\label{classtimer_ae3dce84bbcd9a7022a20e2b63174aa61}} 
+\index{timer@{timer}!set\+Name@{set\+Name}}
+\index{set\+Name@{set\+Name}!timer@{timer}}
+\subsubsection{\texorpdfstring{set\+Name()}{setName()}}
+{\footnotesize\ttfamily void timer\+::set\+Name (\begin{DoxyParamCaption}\item[{std\+::string}]{new\+Name }\end{DoxyParamCaption})}
+
+Changes the name of the timer \begin{DoxyReturn}{Returns}
+Returns true if the change is successful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}\label{classtimer_adad85b4705278d4cb8a2a4f3286cc2c7}} 
+\index{timer@{timer}!start@{start}}
+\index{start@{start}!timer@{timer}}
+\subsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily bool timer\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Start the timer \begin{DoxyReturn}{Returns}
+Return a boolean representing the success or failure of the function. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}\label{classtimer_ad21a0c9113d870f8485b775f1fcd3c73}} 
+\index{timer@{timer}!stop@{stop}}
+\index{stop@{stop}!timer@{timer}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily bool timer\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Stops the timer \begin{DoxyReturn}{Returns}
+Return a boolean representing the success or failure of the function. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtimer_a8c068c53de6269fc3ced75cf27bf4ea6}\label{classtimer_a8c068c53de6269fc3ced75cf27bf4ea6}} 
+\index{timer@{timer}!to\+\_\+string@{to\+\_\+string}}
+\index{to\+\_\+string@{to\+\_\+string}!timer@{timer}}
+\subsubsection{\texorpdfstring{to\+\_\+string()}{to\_string()}}
+{\footnotesize\ttfamily std\+::string timer\+::to\+\_\+string (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Return a string describing the state of the timer 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/timer.\+hpp\item 
+src/timer.\+cpp\end{DoxyCompactItemize}
