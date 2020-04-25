@@ -3,8 +3,8 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+#include <exception>
 #include "timer.hpp"
-
 
 //!Constructors
 /**
@@ -60,10 +60,15 @@ std::string timer::to_string()
  */
 bool timer::start()
 {
+    if(this->callback == NULL)
+    {
+        return false;
+    }
+
     std::mutex m;
     m.try_lock();
     bool ret = false;
-    //if the object is already timing,
+    //if the object is already timing or callback hasnt been provided,
     if(this->t1 != NULL)
     {
         ret = false;
@@ -93,28 +98,29 @@ bool timer::start()
  */
 bool timer::stop()
 {
+    if(this->t1 == NULL){return false;};
+    
     std::mutex m;
     m.try_lock();
     //return value
     bool ret = false;
     try
     {    
-        if(t1 != NULL)
-        {
-            //Change the object's state
-            this->activated = false;
-            //Cleanup the thread
-            this->t1->join();
-            delete this->t1;
-            //Resetting the pointer as available
-            this->t1 = NULL;
-        }
+        //Change the object's state
+        this->activated = false;
+        //Cleanup the thread
+        this->t1->join();
+        delete this->t1;
+        //Resetting the pointer as available
+        this->t1 = NULL;
+        ret = true;
     }
     catch(const std::exception& e)
     {
         //Error handling with a stack trace
         std::cerr << e.what() << '\n';
         ret = false;
+       
     }
     m.unlock();
     return ret;
@@ -127,14 +133,12 @@ bool timer::stop()
 */
 void timer::count()
 {
-    std::mutex m;
     while(this->activated != false)
     {
         std::chrono::milliseconds interval(execDelay);
         std::this_thread::sleep_for(interval);   
         this->callback(this->params);     
     }
-    m.unlock();
 }
 
 
@@ -175,6 +179,14 @@ unsigned int timer::getDelay()
  */
 bool timer::setDelay(unsigned int newDelay)
 {
+    //If object contains empty parameters
+    if(this->callback == NULL)
+    {
+        this->execDelay = newDelay;
+        return true;
+    }
+
+    //If callback as been given
     bool ret = false;
     if(this->stop() == true)
     {
@@ -192,6 +204,14 @@ bool timer::setDelay(unsigned int newDelay)
  */
 bool timer::setCallback(void (*cb)(void *), void * params)
 {
+    //If object contains empty parameters
+    if(this->callback == NULL)
+    {
+        this->callback = cb;
+        this->params = params;
+        return true;
+    }
+
     bool ret = false;
     if(this->stop() == true)
     {

@@ -88,7 +88,7 @@ class timer
         std::thread * t1;           /**< A space reserved for the thread that counts */
         volatile bool activated;    /**< Tells if the timer is running or stopped */
         
-        unsigned int execDelay;     /**< The interval of time at which the callback is executed */
+        volatile unsigned int execDelay;     /**< The interval of time at which the callback is executed */
         void (*callback)(void *);         /**< A pointer to the callback function */
         void * params;
 };

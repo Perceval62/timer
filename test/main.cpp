@@ -16,11 +16,11 @@ int main()
     std::cout<<"Starting testing of the module timer"<<std::endl;
 
     std::array<timerTestCase, 5> testArray = {
-        timerTestCase(false, "Test case 1", 1000, callbackExample, NULL),
-        timerTestCase(false, "Test case 1", 1000, callbackExample, NULL), 
-        timerTestCase(false, "Test case 1", 1000, callbackExample, NULL), 
-        timerTestCase(false, "Test case 1", 1000, callbackExample, NULL),
-        timerTestCase(false, "Test case 1", 1000, callbackExample, NULL)
+        timerTestCase(true, "Test case 1", 1000, callbackExample, NULL),
+        timerTestCase(true, "Test case 1", 1000, callbackExample, NULL), 
+        timerTestCase(true, "Test case 1", 1000, callbackExample, NULL), 
+        timerTestCase(true, "Test case 1", 1000, callbackExample, NULL),
+        timerTestCase(true, "Test case 1", 1000, callbackExample, NULL)
         };
 
 
@@ -29,7 +29,7 @@ int main()
         bool ret = i->testCombination();
         if(ret == i->getTestValidity())
         {
-            std::cout <<"Test succeeded"<<std::endl;
+            //std::cout <<"Test succeeded"<<std::endl;
         }
         else
         {
