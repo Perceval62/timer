@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/timer.hpp
+iostream
+-
+string
+-
+chrono
+-
+thread
+-
+
+/home/vincent/Desktop/code/timerCallback/src/main.cpp
+iostream
+-
+string
+-
+chrono
+-
+thread
+-
+array
+-
+timer.hpp
+/home/vincent/Desktop/code/timerCallback/src/timer.hpp
+

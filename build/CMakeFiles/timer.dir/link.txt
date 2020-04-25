@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++17 -pthread   CMakeFiles/timer.dir/src/main.cpp.o CMakeFiles/timer.dir/src/timer.cpp.o  -o timer 
