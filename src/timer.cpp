@@ -29,6 +29,7 @@ SOFTWARE.
 #include <mutex>
 #include <exception>
 #include <limits.h>
+#include <functional>
 #include "timer.hpp"
 
 //!Constructors
@@ -39,7 +40,7 @@ SOFTWARE.
  * \param cb    The function to call at the given interval.
  * \param params Parameters to be given to the callback function
  */
-timer::timer(std::string name, unsigned int delay, void (*cb)(void * p), void * params ):
+timer::timer(std::string name, unsigned int delay, std::function<void(void*)> cb, void * params ):
     name(name),
     t1(NULL),
     activated(false),
@@ -238,7 +239,7 @@ bool timer::setDelay(unsigned int newDelay)
 /** Changes the current callback function of the timer
  * \return True if the timer is activated
  */
-bool timer::setCallback(void (*cb)(void *), void * params)
+bool timer::setCallback(std::function<void(void*)> cb, void * params)
 {
     //If object contains empty parameters
     if(this->callback == NULL)

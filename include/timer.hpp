@@ -26,6 +26,7 @@ SOFTWARE.
 #include <string>
 #include <chrono>
 #include <thread>
+#include <functional>
 
 /**
  * \class timer
@@ -46,7 +47,7 @@ class timer
          * \param cb    The function to call at the given interval.
          * \param params Parameters to be given to the callback function
          */
-        timer(std::string name, unsigned int delay, void (*cb)(void *), void * params);
+        timer(std::string name, unsigned int delay, std::function<void(void*)> cb, void * params);
 
         //!Destructor
         ~timer();
@@ -98,7 +99,7 @@ class timer
         /** Changes the current callback function of the timer
          * \return True if the timer is activated
          */
-        bool setCallback(void (*cb)(void *), void * params);
+        bool setCallback(std::function<void(void*)>, void * params);
 
     private:
 
@@ -113,6 +114,6 @@ class timer
         volatile bool activated;    /**< Tells if the timer is running or stopped */
         
         volatile unsigned int execDelay;     /**< The interval of time at which the callback is executed */
-        void (*callback)(void *);         /**< A pointer to the callback function */
+        std::function<void(void*)> callback;         /**< A pointer to the callback function */
         void * params;
 };

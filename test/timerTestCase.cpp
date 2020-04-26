@@ -28,7 +28,7 @@ SOFTWARE.
 #include <string.h>
 #include <assert.h>
 
-timerTestCase::timerTestCase(bool isValid, std::string name, unsigned int delay, void (*cb)(void *), void * params):
+timerTestCase::timerTestCase(bool isValid, std::string name, unsigned int delay, std::function<void(void*)> cb, void * params):
         name(name),
         isValid(isValid),
         delay(delay),

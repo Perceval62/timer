@@ -23,12 +23,13 @@ SOFTWARE.
 */
 
 #include <string>
+#include <functional>
 
 class timerTestCase
 {
     public:
 
-        timerTestCase(bool isValid, std::string name, unsigned int delay, void (*cb)(void *), void * params);
+        timerTestCase(bool isValid, std::string name, unsigned int delay, std::function<void(void*)> cb, void * params);
         ~timerTestCase();
 
         bool testCombination();
@@ -40,7 +41,7 @@ class timerTestCase
         bool isValid;
         
         unsigned int delay;
-        void (*cb)(void *);
+        std::function<void(void*)> cb;
         void * params;
 
 };
