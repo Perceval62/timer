@@ -18,7 +18,15 @@ myTimer.start();
 /** snip **/
 
 myTimer.stop();
+```
 
+### Build instructions
+```bash
+git clone https://github.com/Perceval62/timer.git
+cd timer
+mkdir build && cd build
+cmake ..
+make
 ```
 
 Vincent Perrier
