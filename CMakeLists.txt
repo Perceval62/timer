@@ -1,8 +1,6 @@
 #CMAKE project description
 cmake_minimum_required(VERSION 3.13)
-project("timer" 
-        VERSION 1.0
-        LANGUAGES C/C++) 
+project("timer") 
 
 #specify the location of the header files
 include_directories(include/)
@@ -24,4 +22,3 @@ target_sources("testCases"
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/test/timerTestCase.cpp )
 #Link the second target with the test executable.
 target_link_libraries(testCases timer)
-
