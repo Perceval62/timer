@@ -27,6 +27,7 @@ SOFTWARE.
 #include <chrono>
 #include <thread>
 #include <functional>
+#include <atomic>
 
 /**
  * \class timer
@@ -111,9 +112,9 @@ class timer
 
         std::string name;           /**< Unique name for this timer  */
         std::thread * t1;           /**< A space reserved for the thread that counts */
-        volatile bool activated;    /**< Tells if the timer is running or stopped */
+        std::atomic<bool> activated;    /**< Tells if the timer is running or stopped */
         
-        volatile unsigned int execDelay;     /**< The interval of time at which the callback is executed */
+        std::atomic<unsigned int> execDelay;     /**< The interval of time at which the callback is executed */
         std::function<void(void*)> callback;         /**< A pointer to the callback function */
         void * params;
 };
