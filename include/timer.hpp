@@ -28,6 +28,8 @@ SOFTWARE.
 #include <thread>
 #include <functional>
 #include <atomic>
+#include <climits>
+#include <mutex>
 
 /**
  * \class timer
@@ -39,82 +41,240 @@ SOFTWARE.
  */
 class timer
 {
-    public:
-        //!Constructors
-        /**
+public:
+    //!Constructors
+    /**
          * \param name  unique name of the timer. Used for getting a description.
          * \param delay The interval at which the callback function is going to be
          *              called.
          * \param cb    The function to call at the given interval.
          * \param params Parameters to be given to the callback function
          */
-        timer(std::string name, unsigned int delay, std::function<void(void*)> cb, void * params);
+    timer(std::string name, unsigned int delay, std::function<void(void *)> cb, void *params) : name(name),
+                                                                                                t1(NULL),
+                                                                                                activated(false),
+                                                                                                execDelay(delay),
+                                                                                                callback(cb),
+                                                                                                params(params)
+    {
+        if (delay == 0)
+        {
+            delay = 100;
+        }
+    }
+    //!Destructor
+    ~timer()
+    {
+        this->stop();
+    }
 
-        //!Destructor
-        ~timer();
-
-        /**
+    /**
          * \return Return a string describing the state of the timer
          */
-        std::string to_string();
+    std::string to_string()
+    {
+        std::string ret;
+        std::string state;
+        if (this->activated == true)
+        {
+            state = "This timer is currently active";
+        }
+        else
+        {
+            state = "This timer is currently idle";
+        }
 
-        /**
+        ret = this->name + " : a is set with a timer of " + std::to_string(this->execDelay) + "ms. " + state;
+        return ret;
+    }
+
+    /**
          * Start the timer
          * \return Return a boolean representing the success or failure of the
          *          function.
          */
-        bool start();
+    bool start()
+    {
+        //if no callback function was given
+        if (this->callback == NULL)
+        {
+            return false;
+        }
+        // prevent integer overflow
+        if (!(this->execDelay < UINT_MAX)) //! if the delay is not smaller than
+                                           //! the max value for int
+        {
+            return false;
+        }
 
-        /**
+        std::mutex m;
+        m.try_lock();
+        bool ret = false;
+        //if the object is already timing or callback hasnt been provided,
+        if (this->t1 != NULL)
+        {
+            ret = false;
+        }
+        else
+        {
+            //Go ahead
+            try
+            {
+                this->activated = true;
+                t1 = new std::thread(&timer::count, this);
+                ret = true;
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << e.what() << '\n';
+                ret = false;
+            }
+        }
+        m.unlock();
+        return ret;
+    }
+
+    /**
          * Stops the timer
          * \return Return a boolean representing the success or failure of the
          *          function.
          */
-        bool stop();
+    bool stop()
+    {
+        //If the thread doesnt exist
+        if (this->t1 == NULL)
+        {
+            return false;
+        };
 
-        /** Changes the name of the timer
+        std::mutex m;
+        m.try_lock();
+        //return value
+        bool ret = false;
+        try
+        {
+            //Change the object's state
+            this->activated = false;
+            //Cleanup the thread
+            this->t1->join();
+            delete this->t1;
+            //Resetting the pointer as available
+            this->t1 = NULL;
+            ret = true;
+        }
+        catch (const std::exception &e)
+        {
+            //Error handling with a stack trace
+            std::cerr << e.what() << '\n';
+            ret = false;
+        }
+        m.unlock();
+        return ret;
+    }
+
+    /** Changes the name of the timer
          * \return Returns true if the change is successful
          */
-        void setName(std::string newName);
+    void setName(std::string newName)
+    {
+        this->name = newName;
+    }
 
-        /** Gets the current name of the timer
+    /** Gets the current name of the timer
          * \return Returns the current name of the timer
          */
-        std::string getName();
+    std::string getName()
+    {
+        return this->name;
+    }
 
-        /** Gets the current state of the timer
+    /** Gets the current state of the timer
          * \return True if the timer is activated
          */
-        bool getState();
+    bool getState()
+    {
+        return this->activated;
+    }
 
-        /** Gets the current delay of the timer
+    /** Gets the current delay of the timer
          * \return True if the timer is activated
          */
-        unsigned int getDelay();
+    unsigned int getDelay()
+    {
+        return this->execDelay;
+    }
 
-        /** Changes the current execution interval of the timer
+    /** Changes the current execution interval of the timer
          * \return True if the timer is activated
          */
-        bool setDelay(unsigned int newDelay);
+    bool setDelay(unsigned int newDelay)
+    {
+        //If object contains empty parameters
+        if (this->callback == NULL)
+        {
+            this->execDelay = newDelay;
+            return true;
+        }
 
-        /** Changes the current callback function of the timer
+        //If callback as been given
+        bool ret = false;
+        if (this->stop() == true)
+        {
+            this->execDelay = newDelay;
+            if (this->start() == true)
+            {
+                ret = true;
+            }
+        }
+        return (ret);
+    }
+
+    /** Changes the current callback function of the timer
          * \return True if the timer is activated
          */
-        bool setCallback(std::function<void(void*)>, void * params);
+    bool setCallback(std::function<void(void *)> cb, void *params)
+    {
+        //If object contains empty parameters
+        if (this->callback == NULL)
+        {
+            this->callback = cb;
+            this->params = params;
+            return true;
+        }
 
-    private:
+        bool ret = false;
+        if (this->stop() == true)
+        {
+            this->callback = cb;
+            this->params = params;
+            if (this->start() == true)
+            {
+                ret = true;
+            }
+        }
+        return (ret);
+    }
 
-        /** 
+private:
+    /** 
         * The routine that is spawned in the thread. 
         * Waits for the amount of time (execDelay) and calls the callback
         */
-        void count();             
+    void count()
+    {
+        while (this->activated != false)
+        {
+            std::chrono::milliseconds interval(execDelay);
+            std::this_thread::sleep_for(interval);
+            this->callback(this->params);
+        }
+    }
 
-        std::string name;           /**< Unique name for this timer  */
-        std::thread * t1;           /**< A space reserved for the thread that counts */
-        std::atomic<bool> activated;    /**< Tells if the timer is running or stopped */
-        
-        std::atomic<unsigned int> execDelay;     /**< The interval of time at which the callback is executed */
-        std::function<void(void*)> callback;         /**< A pointer to the callback function */
-        void * params;
+    std::string name;            /**< Unique name for this timer  */
+    std::thread *t1;             /**< A space reserved for the thread that counts */
+    std::atomic<bool> activated; /**< Tells if the timer is running or stopped */
+
+    std::atomic<unsigned int> execDelay;  /**< The interval of time at which the callback is executed */
+    std::function<void(void *)> callback; /**< A pointer to the callback function */
+    void *params;
 };
