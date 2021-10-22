@@ -29,7 +29,6 @@ SOFTWARE.
 #include <functional>
 #include <atomic>
 #include <climits>
-#include <mutex>
 
 /**
  * \class timer
@@ -50,13 +49,13 @@ public:
          * \param cb    The function to call at the given interval.
          * \param params Parameters to be given to the callback function
          */
-    timer(std::string name, unsigned int delay, std::function<void(void *)> cb, void *params) : name(name),
-                                                                                                t1(NULL),
-                                                                                                activated(false),
-                                                                                                execDelay(delay),
-                                                                                                callback(cb),
-                                                                                                params(params)
-    {
+    timer(std::string name, unsigned int delay, std::function<void(void *)> cb, void *params) : 
+        name(name),
+        t1(NULL),
+        activated(false),
+        execDelay(delay),
+        callback(cb),
+        params(params){
         if (delay == 0)
         {
             delay = 100;
@@ -107,8 +106,6 @@ public:
             return false;
         }
 
-        std::mutex m;
-        m.try_lock();
         bool ret = false;
         //if the object is already timing or callback hasnt been provided,
         if (this->t1 != NULL)
@@ -130,7 +127,6 @@ public:
                 ret = false;
             }
         }
-        m.unlock();
         return ret;
     }
 
@@ -147,8 +143,6 @@ public:
             return false;
         };
 
-        std::mutex m;
-        m.try_lock();
         //return value
         bool ret = false;
         try
@@ -168,7 +162,6 @@ public:
             std::cerr << e.what() << '\n';
             ret = false;
         }
-        m.unlock();
         return ret;
     }
 
