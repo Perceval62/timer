@@ -1,13 +1,12 @@
 # Timer
 
-Basic timers for cpp with a callback. 
+Basic timers for cpp with a callback.
+Header only. 
 Executes the callback routine after each interval.
 
 ### Prerequisites:
 
-This lib can be used as a shared object library or statically compiled with other projects by copying 
-the src/timer.hpp & src/timer.cpp files into a new project. It will work with any system that has implemented 
-the C++17 STL.
+C++17 ready compiler.
 
 ### Basic example:
 ```c++
@@ -36,4 +35,4 @@ make
 ```
 
 Vincent Perrier
-26-04-2020
+21-10-2021
