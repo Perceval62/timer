@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2020 Vincent Perrier
+Copyright (c) 2020-2021 Vincent Perrier
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -56,30 +56,25 @@ public:
         execDelay(delay),
         callback(cb),
         params(params){
-        if (delay == 0)
-        {
+        if (delay == 0){
             delay = 100;
         }
     }
     //!Destructor
-    ~timer()
-    {
+    ~timer(){
         this->stop();
     }
 
     /**
          * \return Return a string describing the state of the timer
          */
-    std::string to_string()
-    {
+    std::string to_string(){
         std::string ret;
         std::string state;
-        if (this->activated == true)
-        {
+        if (this->activated == true){
             state = "This timer is currently active";
         }
-        else
-        {
+        else{
             state = "This timer is currently idle";
         }
 
@@ -92,37 +87,29 @@ public:
          * \return Return a boolean representing the success or failure of the
          *          function.
          */
-    bool start()
-    {
+    bool start(){
         //if no callback function was given
-        if (this->callback == NULL)
-        {
+        if (this->callback == NULL){
             return false;
         }
         // prevent integer overflow
-        if (!(this->execDelay < UINT_MAX)) //! if the delay is not smaller than
-                                           //! the max value for int
-        {
+        if (!(this->execDelay < UINT_MAX)){
             return false;
         }
 
         bool ret = false;
         //if the object is already timing or callback hasnt been provided,
-        if (this->t1 != NULL)
-        {
+        if (this->t1 != NULL){
             ret = false;
         }
-        else
-        {
+        else{
             //Go ahead
-            try
-            {
+            try{
                 this->activated = true;
                 t1 = new std::thread(&timer::count, this);
                 ret = true;
             }
-            catch (const std::exception &e)
-            {
+            catch (const std::exception &e){
                 std::cerr << e.what() << '\n';
                 ret = false;
             }
@@ -135,18 +122,15 @@ public:
          * \return Return a boolean representing the success or failure of the
          *          function.
          */
-    bool stop()
-    {
+    bool stop(){
         //If the thread doesnt exist
-        if (this->t1 == NULL)
-        {
+        if (this->t1 == NULL){
             return false;
         };
 
         //return value
         bool ret = false;
-        try
-        {
+        try{
             //Change the object's state
             this->activated = false;
             //Cleanup the thread
@@ -156,8 +140,7 @@ public:
             this->t1 = NULL;
             ret = true;
         }
-        catch (const std::exception &e)
-        {
+        catch (const std::exception &e){
             //Error handling with a stack trace
             std::cerr << e.what() << '\n';
             ret = false;
@@ -168,54 +151,46 @@ public:
     /** Changes the name of the timer
          * \return Returns true if the change is successful
          */
-    void setName(std::string newName)
-    {
+    void setName(std::string newName){
         this->name = newName;
     }
 
     /** Gets the current name of the timer
          * \return Returns the current name of the timer
          */
-    std::string getName()
-    {
+    std::string getName(){
         return this->name;
     }
 
     /** Gets the current state of the timer
          * \return True if the timer is activated
          */
-    bool getState()
-    {
+    bool getState(){
         return this->activated;
     }
 
     /** Gets the current delay of the timer
          * \return True if the timer is activated
          */
-    unsigned int getDelay()
-    {
+    unsigned int getDelay(){
         return this->execDelay;
     }
 
     /** Changes the current execution interval of the timer
          * \return True if the timer is activated
          */
-    bool setDelay(unsigned int newDelay)
-    {
+    bool setDelay(unsigned int newDelay){
         //If object contains empty parameters
-        if (this->callback == NULL)
-        {
+        if (this->callback == NULL){
             this->execDelay = newDelay;
             return true;
         }
 
         //If callback as been given
         bool ret = false;
-        if (this->stop() == true)
-        {
+        if (this->stop() == true){
             this->execDelay = newDelay;
-            if (this->start() == true)
-            {
+            if (this->start() == true){
                 ret = true;
             }
         }
@@ -225,23 +200,19 @@ public:
     /** Changes the current callback function of the timer
          * \return True if the timer is activated
          */
-    bool setCallback(std::function<void(void *)> cb, void *params)
-    {
+    bool setCallback(std::function<void(void *)> cb, void *params){
         //If object contains empty parameters
-        if (this->callback == NULL)
-        {
+        if (this->callback == NULL){
             this->callback = cb;
             this->params = params;
             return true;
         }
 
         bool ret = false;
-        if (this->stop() == true)
-        {
+        if (this->stop() == true){
             this->callback = cb;
             this->params = params;
-            if (this->start() == true)
-            {
+            if (this->start() == true){
                 ret = true;
             }
         }
@@ -253,10 +224,8 @@ private:
         * The routine that is spawned in the thread. 
         * Waits for the amount of time (execDelay) and calls the callback
         */
-    void count()
-    {
-        while (this->activated != false)
-        {
+    void count(){
+        while (this->activated != false){
             std::chrono::milliseconds interval(execDelay);
             std::this_thread::sleep_for(interval);
             this->callback(this->params);
